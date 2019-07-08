@@ -16,14 +16,11 @@ exports.getLogin = (req, res, next) => res.render('auth/login')
 
 exports.postLogin = async (req, res, next) => {
   await passport.authenticate('local', (err, user, info) => {
-    // You will need to manage the errors
-    if (err) return res.render('auth/login', err)
-    if (!user) return res.render('auth/login', { err: info })
+    if (err) return next(err)
+    if (!user) return res.render('auth/login', { ...req.body, err: 'Email o contrasena incorrecta' })
     req.logIn(user, err => {
-      if (err) return next(err)
-      req.app.locals.loggedUser = true
-      req.app.locals.user = user
-      return res.redirect(`/profile`)
+      if (err) return res.render('auth/login', { ...req.body, error: 'Contrasena incorrecta' })
+      return res.redirect('/')
     })
   })(req, res, next)
 }
