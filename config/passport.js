@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const passport = require('passport')
+const passport = require('../config/passport')
 
 // Create a local strategy with PLM
 passport.use(User.createStrategy())
