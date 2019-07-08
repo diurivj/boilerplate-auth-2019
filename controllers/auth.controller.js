@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const passport = require('passport')
+const passport = require('../config/passport')
 
 exports.getSignup = (req, res, next) => res.render('auth/signup')
 
@@ -16,13 +16,13 @@ exports.getLogin = (req, res, next) => res.render('auth/login')
 
 exports.postLogin = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
+    console.log('error  1', err)
     if (err) return next(err)
     if (!user) return res.render('auth/login', { ...req.body, err: 'Email o contrasena incorrecta' })
     req.logIn(user, err => {
+      console.log('error 2', err)
       if (err) return res.render('auth/login', { ...req.body, err: 'Contrasena incorrecta' })
-      req.app.locals.loggedUser = true
-      req.app.locals.user = req.user
-      return res.redirect('/login')
+      else return res.redirect('/profile')
     })
   })(req, res, next)
 }

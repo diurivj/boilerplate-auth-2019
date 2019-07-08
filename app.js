@@ -8,10 +8,12 @@ const hbs = require('hbs')
 const mongoose = require('mongoose')
 const logger = require('morgan')
 const path = require('path')
-// We require passport !!IMPORTANT!!, our own configured passport
+// Require passport !!IMPORTANT!!, our own configured passport
 const passport = require('./config/passport')
-// We require express session
+// Require express session
 const session = require('express-session')
+// Require mongostore for saving the session on mongodb
+const MongoStore = require('connect-mongo')(session)
 // Middleware for check logged user
 const { checkLoggedUser } = require('./middlewares/auth')
 
@@ -30,8 +32,9 @@ app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true,
-    cookie: { httpOnly: true, maxAge: 2419200000 }
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: { maxAge: 2419200000 }
   })
 )
 

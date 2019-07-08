@@ -9,7 +9,7 @@ router.get('/signup', getSignup)
 router.post('/signup', catchErrors(postSignup))
 
 router.get('/login', getLogin)
-router.post('/login', catchErrors(postLogin))
+router.post('/login', postLogin)
 
 router.get('/profile', isLoggedIn, getProfile)
 
