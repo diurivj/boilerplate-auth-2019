@@ -19,7 +19,7 @@ exports.postLogin = async (req, res, next) => {
     // You will need to manage the errors
     if (err) return res.render('auth/login', err)
     if (!user) return res.render('auth/login', { err: info })
-    req.login(user, err => {
+    req.logIn(user, err => {
       if (err) return next(err)
       req.app.locals.loggedUser = true
       req.app.locals.user = user
@@ -31,6 +31,6 @@ exports.postLogin = async (req, res, next) => {
 exports.getProfile = (req, res, next) => res.render('auth/profile')
 
 exports.logout = (req, res, next) => {
-  req.logout()
+  req.logOut()
   res.redirect('/login')
 }
