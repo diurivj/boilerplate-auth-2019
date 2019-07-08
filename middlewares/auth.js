@@ -4,5 +4,10 @@ exports.checkLoggedUser = (req, res, next) => {
 }
 
 exports.isLoggedIn = (req, res, next) => {
-  req.isAuthenticated() ? next() : res.redirect('/login')
+  if (req.isAuthenticated()) {
+    req.app.locals.user = req.user
+    next()
+  } else {
+    res.redirect('/login')
+  }
 }
