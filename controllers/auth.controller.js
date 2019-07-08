@@ -22,7 +22,9 @@ exports.postLogin = (req, res, next) => {
     req.logIn(user, err => {
       console.log('error 2', err)
       if (err) return res.render('auth/login', { ...req.body, err: 'Contrasena incorrecta' })
-      else return res.redirect('/profile')
+      console.log(req.user)
+      req.app.locals.user = req.user
+      return res.redirect('/profile')
     })
   })(req, res, next)
 }
