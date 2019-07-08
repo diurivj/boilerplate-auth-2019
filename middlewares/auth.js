@@ -3,11 +3,4 @@ exports.checkLoggedUser = (req, res, next) => {
   next()
 }
 
-exports.isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    req.app.locals.user = req.user
-    next()
-  } else {
-    res.redirect('/login')
-  }
-}
+exports.isLoggedIn = (req, res, next) => (req.isAuthenticated() ? next() : res.redirect('/login'))

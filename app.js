@@ -12,8 +12,6 @@ const path = require('path')
 const passport = require('./config/passport')
 // Require express session
 const session = require('express-session')
-// Require mongostore for saving the session on mongodb
-const MongoStore = require('connect-mongo')(session)
 // Middleware for check logged user
 const { checkLoggedUser } = require('./middlewares/auth')
 
@@ -33,7 +31,6 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    // store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: { maxAge: 2419200000 }
   })
 )

@@ -19,7 +19,7 @@ exports.postLogin = passport.authenticate('local', {
   successRedirect: '/profile'
 })
 
-exports.getProfile = (req, res, next) => res.render('auth/profile')
+exports.getProfile = (req, res, next) => res.render('auth/profile', { user: req.user })
 
 exports.logout = (req, res, next) => {
   req.logOut()
