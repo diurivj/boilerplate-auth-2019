@@ -1,5 +1,9 @@
 <div class="signup">
+  {{#if err}}
+  <h2>{{err}}</h2>
+  {{else}}
   <h2>Login</h2>
+  {{/if}}
   <form action="/login" method="POST">
     <input type="email" name="email" placeholder="Email" />
     <input type="password" name="password" placeholder="Password" />

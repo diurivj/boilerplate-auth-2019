@@ -17,8 +17,8 @@ exports.getLogin = (req, res, next) => res.render('auth/login')
 exports.postLogin = async (req, res, next) => {
   await passport.authenticate('local', (err, user, info) => {
     // You will need to manage the errors
-    if (err) next(err)
-    if (!user) next(info)
+    if (err) return res.render('auth/login', err)
+    if (!user) return res.render('auth/login', { err: info })
     req.login(user, err => {
       if (err) return next(err)
       req.app.locals.loggedUser = true
