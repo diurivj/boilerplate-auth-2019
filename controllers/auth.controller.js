@@ -14,15 +14,15 @@ exports.postSignup = async (req, res, next) => {
 
 exports.getLogin = (req, res, next) => res.render('auth/login')
 
-exports.postLogin = async (req, res, next) => {
-  await passport.authenticate('local', (err, user, info) => {
+exports.postLogin = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) return next(err)
     if (!user) return res.render('auth/login', { ...req.body, err: 'Email o contrasena incorrecta' })
     req.logIn(user, err => {
       if (err) return res.render('auth/login', { ...req.body, err: 'Contrasena incorrecta' })
       req.app.locals.loggedUser = true
       req.app.locals.user = req.user
-      return res.redirect('/')
+      return res.redirect('/login')
     })
   })(req, res, next)
 }
