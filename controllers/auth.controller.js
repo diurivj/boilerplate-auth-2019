@@ -19,7 +19,9 @@ exports.postLogin = async (req, res, next) => {
     if (err) return next(err)
     if (!user) return res.render('auth/login', { ...req.body, err: 'Email o contrasena incorrecta' })
     req.logIn(user, err => {
-      if (err) return res.render('auth/login', { ...req.body, error: 'Contrasena incorrecta' })
+      if (err) return res.render('auth/login', { ...req.body, err: 'Contrasena incorrecta' })
+      req.app.locals.loggedUser = true
+      req.app.locals.user = req.user
       return res.redirect('/')
     })
   })(req, res, next)
